@@ -1,0 +1,28 @@
+version: '3.9'
+
+networks:
+  bot:
+    name: ${APP_NAME}_network
+
+services:
+  redbot:
+    container_name: ${APP_NAME}_bot
+    cap_add:
+      - "SYS_NICE"
+    build:
+      context: ./bot
+      dockerfile: Dockerfile
+    networks:
+      - bot
+    volumes:
+      - ./bot/data:/data:rw
+    environment:
+      TOKEN: ${BOT_DISCORD_TOKEN}
+      TZ: ${TIMEZONE}
+      PUID: ${BOT_PUID}
+      PREFIX: ${BOT_PREFIX}
+      REDBOT_VERSION: ${REDBOT_VERSION}
+      NICENESS: ${PROCESS_NICENESS}
+
+    
+      
